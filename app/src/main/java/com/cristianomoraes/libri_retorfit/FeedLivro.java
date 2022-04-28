@@ -143,7 +143,10 @@ public class FeedLivro extends AppCompatActivity {
                       **/
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(FeedLivro.this)
                             .setMessage("Escola a ação que deseja")
-                            .setPositiveButton("Alterar", (dialog1, witch) ->{})
+                            .setPositiveButton("Alterar", (dialog1, witch) ->{
+                                Intent intent = new Intent(FeedLivro.this, EditarLivro.class);
+                                startActivity(intent);
+                            })
                             .setNegativeButton("Excluir", (dialog1, witch) ->{
                                 routerInterface = APIUtil.getUsuarioInterface();
 
