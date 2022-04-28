@@ -6,9 +6,11 @@ import com.cristianomoraes.libri_retorfit.model.Usuario;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Body;
+import retrofit2.http.Path;
 
 public interface RouterInterface {
 
@@ -22,4 +24,7 @@ public interface RouterInterface {
 
     @GET("livro/listarLivro")
     Call<List<Livro>> getLivro();
+
+    @DELETE("/livro/excluirLivro/{cod_livro}")
+    Call<Livro> deleteLivro(@Path("cod_livro") int cod_livro);
 }

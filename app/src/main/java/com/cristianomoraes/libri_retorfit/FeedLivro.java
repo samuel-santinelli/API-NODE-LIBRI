@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cristianomoraes.libri_retorfit.model.Item;
 import com.cristianomoraes.libri_retorfit.model.Livro;
@@ -123,6 +126,49 @@ public class FeedLivro extends AppCompatActivity {
                 txtDescricao = itemView.findViewById(R.id.txtCardDescricaoLivro);
 
                 /** TRATAMENTO DE CLIQUE PARA A ALTERAÇÃO E EXCLUSÃO DE LIVRO **/
+                itemView.setOnClickListener(view -> {
+                    /**
+                     PARAMETRO:
+                        1 - Contexto onde será exibido
+
+                     CHAMA DOIS MÉTODOS:
+                     setMessage -> Configura a mensagem da instrução para o usuario
+                     setPositiveButton
+                        Parametros:
+                                1 - Titulo (type: string)
+                                2 - Função que trata a ação do botão
+                     setNegativeButton
+                                 1 - Titulo (type: string)
+                                 2 - Função que trata a ação do botão
+                      **/
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(FeedLivro.this)
+                            .setMessage("Escola a ação que deseja")
+                            .setPositiveButton("Alterar", (dialog1, witch) ->{})
+                            .setNegativeButton("Excluir", (dialog1, witch) ->{
+                                routerInterface = APIUtil.getUsuarioInterface();
+
+                                Call<Livro> call = routerInterface.deleteLivro(cod_livro);
+                                call.enqueue(new Callback<Livro>() {
+                                    @Override
+                                    public void onResponse(Call<Livro> call, Response<Livro> response) {
+                                        Toast.makeText(FeedLivro.this,
+                                                "O livro selecionado foi excluido! ACÃO IRREVERSIVEL", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(FeedLivro.this, FeedLivro.class));
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Livro> call, Throwable t) {
+
+                                    }
+                                });
+                            });
+
+                        alertDialog.show();
+                });
+
+
+
             }// FIM DO MÉTODO CONSTRUTOR DE LIVROVIEWHOLDER
 
             public void setLivroData(Livro livro){
