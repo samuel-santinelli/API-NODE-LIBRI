@@ -145,6 +145,7 @@ public class FeedLivro extends AppCompatActivity {
                             .setMessage("Escola a ação que deseja")
                             .setPositiveButton("Alterar", (dialog1, witch) ->{
                                 Intent intent = new Intent(FeedLivro.this, EditarLivro.class);
+                                intent.putExtra("cod_livro", cod_livro);
                                 startActivity(intent);
                             })
                             .setNegativeButton("Excluir", (dialog1, witch) ->{
